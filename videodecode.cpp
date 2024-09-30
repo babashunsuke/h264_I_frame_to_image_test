@@ -132,12 +132,11 @@ GstFlowReturn CVideoDecode::FromSample(GstAppSink *appsink)
       if (gst_buffer_map(buffer, &map, GST_MAP_READ)) {
         int width = 0;
         int height = 0;
-        GstCaps *caps = gst_sample_get_caps(sample);
+        const GstCaps *caps = gst_sample_get_caps(sample);
 	if (caps) {
           GstStructure *structure = gst_caps_get_structure(caps, 0);
           gst_structure_get_int(structure, "width", &width);
           gst_structure_get_int(structure, "height", &height);
-	  gst_caps_unref(caps);
 	}
 	if (0 < height && 0 < width) {
           m_mat.create(height, width, CV_8UC3);
